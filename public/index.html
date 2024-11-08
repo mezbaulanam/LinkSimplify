@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkSimplify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Navbar -->
+        <nav class="navbar" v-if="token">
+            <div class="user-info">
+                Welcome, {{ username }}!
+            </div>
+            <button class="logout-button" @click="logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </nav>
+
+        <!-- Mobile Header -->
+        <div class="mobile-header">
+            <h1>LinkSimplify 🔗</h1>
+            <p>Simplify and manage your URLs with ease</p>
+        </div>
+
+        <header>
+            <h1>LinkSimplify <span class="decorative-icon">🔗</span></h1>
+            <p>Simplify and manage your URLs with ease</p>
+        </header>
+        <main>
+            <div class="container">
+                <div v-if="!token" class="auth-container">
+                    <div class="auth-tabs">
+                        <button @click="activeTab = 'login'" :class="{ active: activeTab === 'login' }">Login</button>
+                        <button @click="activeTab = 'register'" :class="{ active: activeTab === 'register' }">Register</button>
+                    </div>
+                    <div v-if="activeTab === 'login'" class="auth-form">
+                        <h2>Login</h2>
+                        <input v-model="loginUsername" type="text" placeholder="Username" required>
+                        <input v-model="loginPassword" type="password" placeholder="Password" required>
+                        <button @click="login"><i class="fas fa-sign-in-alt"></i> Login</button>
+                    </div>
+                    <div v-if="activeTab === 'register'" class="auth-form">
+                        <h2>Register</h2>
+                        <input v-model="registerUsername" type="text" placeholder="Username" required>
+                        <input v-model="registerPassword" type="password" placeholder="Password" required>
+                        <button @click="register"><i class="fas fa-user-plus"></i> Register</button>
+                    </div>
+                    
+                </div>
+                <div v-else>
+                    <div class="url-form">
+                        <h2>Shorten URL</h2>
+                        <input v-model="originalUrl" type="url" placeholder="Enter long URL" required>
+                        <input type="text" v-model="customShortUrl" placeholder="Custom short URL (optional)">
+                        <button @click="shortenUrl"><i class="fas fa-link"></i> Shorten</button>
+                    </div>
+                    <div class="url-list">
+
+                        <h2>Your Shortened URLs</h2>
+                        <div v-for="url in urls" :key="url._id" class="url-item">
+                            <div class="url-info">
+                                <p><strong>Short URL:</strong> <a :href="url.shortUrl" target="_blank">{{ url.shortUrl }}</a></p>
+                                <p><strong>Long URL:</strong> <a :href="url.originalUrl" target="_blank">{{ url.originalUrl }}</a></p>
+                            </div>
+                            <div class="url-actions">
+                                <button @click="showAnalytics(url)"><i class="fas fa-chart-bar"></i> Analytics</button>
+                                <button @click="deleteUrl(url._id)"><i class="fas fa-trash-alt"></i> Delete</button>
+                            </div>
+                            <div v-if="url.showingAnalytics">
+                                <button @click="closeAnalytics(url)">Close Analytics</button>
+                                <h3>Analytics for {{ url.shortUrl }}</h3>
+                                <canvas :id="'analyticsChart-' + url._id"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2023 LinkSimplify <span class="decorative-icon">✨</span>. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
