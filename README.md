@@ -10,6 +10,7 @@ LinkSimplify is a powerful and user-friendly URL shortener designed to streamlin
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
+- [External Credits](#external-credits)
 
 ## Features
 
@@ -92,6 +93,10 @@ We welcome contributions from the community! Please read our [Contributing Guide
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## External Credits
+
+- [Free SVG Backgrounds and Patterns by SVGBackgrounds.com](https://www.svgbackgrounds.com/set/free-svg-backgrounds-and-patterns/)
 
 ---
 
