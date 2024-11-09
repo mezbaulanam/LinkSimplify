@@ -20,7 +20,7 @@ new Vue({
             this.loading = true;
             this.error = null;
             try {
-                const response = await fetch(`${this.API_URL}/api/auth/login`, {
+                const response = await fetch(`${this.API_URL}api/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username: this.loginUsername, password: this.loginPassword })
@@ -47,7 +47,7 @@ new Vue({
             this.loading = true;
             this.error = null;
             try {
-                const response = await fetch(`${this.API_URL}/api/auth/register`, {
+                const response = await fetch(`${this.API_URL}api/auth/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username: this.registerUsername, password: this.registerPassword })
@@ -74,7 +74,7 @@ new Vue({
             this.loading = true;
             this.error = null;
             try {
-                const response = await fetch(`${this.API_URL}/api/url/shorten`, {
+                const response = await fetch(`${this.API_URL}api/url/shorten`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ new Vue({
                 }
                 const data = await response.json();
                 if (data.shortUrl) {
-                    this.shortenedUrl = `${this.API_URL}/${data.shortUrl}`;
+                    this.shortenedUrl = `${this.API_URL}${data.shortUrl}`;
                     this.fetchUrls();
                 } else {
                     throw new Error(data.error || 'Failed to shorten URL');
@@ -106,7 +106,7 @@ new Vue({
             this.loading = true;
             this.error = null;
             try {
-                const response = await fetch(`${this.API_URL}/api/url/myurls`, {
+                const response = await fetch(`${this.API_URL}api/url/myurls`, {
                     headers: { 
                         'x-auth-token': this.token,
                         'Content-Type': 'application/json'
@@ -120,7 +120,7 @@ new Vue({
                 if (Array.isArray(data)) {
                     this.urls = data.map(url => ({
                         ...url,
-                        fullShortUrl: `${this.API_URL}/${url.shortUrl}`
+                        fullShortUrl: `${this.API_URL}${url.shortUrl}`
                     }));
                 } else {
                     throw new Error('Failed to fetch URLs');
@@ -135,7 +135,7 @@ new Vue({
             this.loading = true;
             this.error = null;
             try {
-                const response = await fetch(`${this.API_URL}/api/url/analytics/${url._id}`, {
+                const response = await fetch(`${this.API_URL}api/url/analytics/${url._id}`, {
                     headers: { 'x-auth-token': this.token }
                 });
                 if (response.status === 401) {
@@ -158,7 +158,7 @@ new Vue({
             if (!this.token) return;
             
             try {
-                const response = await fetch(`${this.API_URL}/api/auth/username`, {
+                const response = await fetch(`${this.API_URL}api/auth/username`, {
                     headers: { 'x-auth-token': this.token }
                 });
                 
@@ -180,7 +180,7 @@ new Vue({
                 this.loading = true;
                 this.error = null;
                 try {
-                    const response = await fetch(`${this.API_URL}/api/url/${url._id}`, {
+                    const response = await fetch(`${this.API_URL}api/url/${url._id}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -205,7 +205,7 @@ new Vue({
                 this.loading = true;
                 this.error = null;
                 try {
-                    const response = await fetch(`${this.API_URL}/api/url/${urlId}`, {
+                    const response = await fetch(`${this.API_URL}api/url/${urlId}`, {
                         method: 'DELETE',
                         headers: { 'x-auth-token': this.token }
                     });
