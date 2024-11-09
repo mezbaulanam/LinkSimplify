@@ -1,7 +1,8 @@
 new Vue({
     el: '#app',
     data: {
-        API_URL: window.location.href , // Change this to your API URL
+        API_URL: window.location.href, // Change this to your API URL
+        BASE_URL: window.location.origin + '/', // Define the base URL for frontend
         token: localStorage.getItem('token'),
         username: localStorage.getItem('username') || 'NaN',
         password: '',
@@ -120,7 +121,7 @@ new Vue({
                 if (Array.isArray(data)) {
                     this.urls = data.map(url => ({
                         ...url,
-                        fullShortUrl: `${this.API_URL}${url.shortUrl}`
+                        fullShortUrl: `${this.BASE_URL}${url.shortUrl}`
                     }));
                 } else {
                     throw new Error('Failed to fetch URLs');
@@ -322,10 +323,54 @@ new Vue({
                 console.error('Analytics chart canvas not found');
             }
         },
-        
+        showQRCode(url) {
+            this.$set(url, 'showingQRCode', true);
+            this.$nextTick(() => {
+                let qrcodeElement = document.getElementById('qrcode-' + url._id);
+                if (qrcodeElement && !url.qrcode) {
+                    url.qrcode = new QRCode(qrcodeElement, {
+                        text: url.fullShortUrl,
+                        width: 128,
+                        height: 128,
+                    });
+                }
+            });
+        },
+        closeQRCode(url) {
+            url.showingQRCode = false;
+            if (url.qrcode) {
+                url.qrcode.clear();
+                url.qrcode = null;
+            }
+        },
         handleUnauthorized() {
             this.logout();
             this.error = 'Session expired. Please log in again.';
+        },
+
+        openShareModal(url) {
+            this.$set(url, 'showingShareModal', true);
+        },
+        closeShareModal(url) {
+            this.$set(url, 'showingShareModal', false);
+        },
+        getShareLink(platform, shortUrl) {
+            const encodedUrl = encodeURIComponent(shortUrl);
+            const encodedText = encodeURIComponent('Check out this link!');
+            switch(platform) {
+                case 'facebook':
+                    return `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+                case 'twitter':
+                    return `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`;
+                case 'linkedin':
+                    return `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedText}`;
+                case 'reddit':
+                    return `https://www.reddit.com/submit?url=${encodedUrl}&title=${encodedText}`;
+                case 'email':
+                    return `mailto:?subject=${encodedText}&body=${encodedUrl}`;
+                default:
+                    return shortUrl;
+            }
         }
     },
     mounted() {

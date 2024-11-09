@@ -300,11 +300,17 @@ footer {
 }
 
 @keyframes bounceIn {
-    /* Adjust the scaling to prevent text from being cut off */
     0% { transform: scale(0.8); opacity: 0; }
     50% { transform: scale(1); opacity: 1; }
     70% { transform: scale(0.95); }
     100% { transform: scale(1); }
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.3s ease;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
 }
 
 .navbar {
@@ -340,6 +346,120 @@ footer {
     color: var(--surface);
     padding: 40px 0;
     text-align: center;
+}
+
+.qr-code-container {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.qr-code-container button {
+    margin-bottom: 10px;
+}
+
+.qr-code-container canvas,
+.qr-code-container img {
+    display: inline-block;
+    margin: auto;
+}
+
+.share-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.share-content {
+    background: var(--surface);
+    padding: 30px;
+    border-radius: 12px;
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    color: var(--text);
+}
+
+.share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.share-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    padding: 10px;
+    border-radius: 8px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+.share-button i {
+    margin-right: 8px;
+}
+
+.share-button.facebook {
+    background: #3b5998;
+}
+
+.share-button.facebook:hover {
+    background: #2d4373;
+}
+
+.share-button.twitter {
+    background: #1da1f2;
+}
+
+.share-button.twitter:hover {
+    background: #0d95e8;
+}
+
+.share-button.linkedin {
+    background: #0077b5;
+}
+
+.share-button.linkedin:hover {
+    background: #006097;
+}
+
+.share-button.reddit {
+    background: #ff4500;
+}
+
+.share-button.reddit:hover {
+    background: #e03d00;
+}
+
+.share-button.email {
+    background: #6c757d;
+}
+
+.share-button.email:hover {
+    background: #5a6268;
 }
 
 @media (max-width: 768px) {

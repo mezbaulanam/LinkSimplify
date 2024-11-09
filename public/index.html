@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
     <div id="app">
@@ -69,12 +70,38 @@
                             <div class="url-actions">
                                 <button @click="showAnalytics(url)"><i class="fas fa-chart-bar"></i> Analytics</button>
                                 <button @click="deleteUrl(url._id)"><i class="fas fa-trash-alt"></i> Delete</button>
+                                <button @click="showQRCode(url)"><i class="fas fa-qrcode"></i> Show QR Code</button>
+                                <!-- Share Button -->
+                                <button @click="openShareModal(url)"><i class="fas fa-share-alt"></i> Share</button>
                             </div>
-                            <div v-if="url.showingAnalytics">
-                                <button @click="closeAnalytics(url)">Close Analytics</button>
-                                <h3>Analytics for {{ url.shortUrl }}</h3>
-                                <canvas :id="'analyticsChart-' + url._id"></canvas>
-                            </div>
+                            <transition name="fade">
+                                <div v-if="url.showingAnalytics" class="analytics-container">
+                                    <button @click="closeAnalytics(url)">Close Analytics</button>
+                                    <h3>Analytics for {{ url.shortUrl }}</h3>
+                                    <canvas :id="'analyticsChart-' + url._id"></canvas>
+                                </div>
+                            </transition>
+                            <transition name="fade">
+                                <div v-if="url.showingQRCode" class="qr-code-container">
+                                    <button @click="closeQRCode(url)"><i class="fas fa-times"></i> Close QR Code</button>
+                                    <div :id="'qrcode-' + url._id"></div>
+                                </div>
+                            </transition>
+                            <transition name="fade">
+                                <div v-if="url.showingShareModal" class="share-modal">
+                                    <div class="share-content">
+                                        <button class="close-button" @click="closeShareModal(url)"><i class="fas fa-times"></i></button>
+                                        <h3>Share {{ url.shortUrl }}</h3>
+                                        <div class="share-buttons">
+                                            <a :href="getShareLink('facebook', url.fullShortUrl)" target="_blank" class="share-button facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
+                                            <a :href="getShareLink('twitter', url.fullShortUrl)" target="_blank" class="share-button twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                                            <a :href="getShareLink('linkedin', url.fullShortUrl)" target="_blank" class="share-button linkedin"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                                            <a :href="getShareLink('reddit', url.fullShortUrl)" target="_blank" class="share-button reddit"><i class="fab fa-reddit-alien"></i> Reddit</a>
+                                            <a :href="getShareLink('email', url.fullShortUrl)" target="_blank" class="share-button email"><i class="fas fa-envelope"></i> Email</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </transition>
                         </div>
                     </div>
                 </div>
