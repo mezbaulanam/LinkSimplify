@@ -1,7 +1,7 @@
 new Vue({
     el: '#app',
     data: {
-        API_URL: 'http://localhost:3000', // Change this to your API URL
+        API_URL: window.location.href , // Change this to your API URL
         token: localStorage.getItem('token'),
         username: localStorage.getItem('username') || 'NaN',
         password: '',
