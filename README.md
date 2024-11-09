@@ -11,6 +11,7 @@ LinkSimplify is a powerful and user-friendly URL shortener designed to streamlin
 - [Contributing](#contributing)
 - [License](#license)
 - [External Credits](#external-credits)
+- [Docker Support](#docker-support)
 
 ## Features
 
@@ -24,9 +25,9 @@ LinkSimplify is a powerful and user-friendly URL shortener designed to streamlin
 - Responsive design
 - Secure password storage with bcrypt
 - JWT-based authentication
+- Docker support
 - API Access ( Planned )
 - Extendable with additional features ( Planned )
-- Docker support ( Planned )
 - Custom Domain Support ( Planned )
 - Password-protected URLs ( Planned )
 - Expiration Dates ( Planned )
@@ -77,6 +78,32 @@ To get started with LinkSimplify, follow these steps:
     ```sh
     npm start
     ```
+
+## Docker Support
+
+LinkSimplify can be easily set up using Docker. Follow these steps to run the application in a Docker container:
+
+1. Build the Docker image:
+
+    ```sh
+    docker build -t linksimplify .
+    ```
+
+2. Run the Docker container:
+
+    ```sh
+    docker run -p 3000:3000 --env-file .env linksimplify
+    ```
+
+Alternatively, you can use Docker Compose to manage the setup:
+
+1. Build and start the services:
+
+    ```sh
+    docker-compose up --build
+    ```
+
+2. The application will be available at `http://localhost:3000`.
 
 ## Usage
 
