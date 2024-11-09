@@ -244,28 +244,77 @@ new Vue({
             }
         },
         renderChart(url) {
-            const ctx = document.getElementById(`analyticsChart-${url._id}`);
-            if (ctx) {
+            const canvas = document.getElementById(`analyticsChart-${url._id}`);
+            if (canvas) {
+                // Ensure the canvas has fixed dimensions
+                canvas.width = 400;
+                canvas.height = 300;
+
+                // Clear previous chart if it exists
                 if (url.chart) {
                     url.chart.destroy();
+                } else {
+                    // Get canvas context
+                    var ctx = canvas.getContext('2d');
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
                 }
-                url.chart = new Chart(ctx, {
+
+                // Calculate average clicks per day
+                const createdAt = new Date(url.createdAt);
+                const now = new Date();
+                const diffTime = Math.abs(now - createdAt);
+                const diffDays = Math.max(Math.ceil(diffTime / (1000 * 60 * 60 * 24)), 1);
+                const avgClicksPerDay = (url.analyticsData.clicks / diffDays).toFixed(2);
+                const backgroundColor = 'rgba(75, 192, 192, 0.7)';
+
+                url.chart = new Chart(canvas, {
                     type: 'bar',
                     data: {
-                        labels: ['Clicks'],
+                        labels: ['Average Clicks per Day'],
                         datasets: [{
-                            label: '# of Clicks',
-                            data: [url.analyticsData.clicks],
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            label: 'Clicks',
+                            data: [avgClicksPerDay],
+                            backgroundColor: backgroundColor,
                             borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
+                            borderWidth: 1,
+                            borderRadius: 5,
                         }]
                     },
                     options: {
+                        responsive: false,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false,
+                            },
+                            title: {
+                                display: true,
+                                text: `Average Clicks per Day for ${url.shortUrl}`,
+                                font: {
+                                    size: 16,
+                                },
+                                color: '#333',
+                            },
+                        },
                         scales: {
-                            yAxes: [{
-                                ticks: { beginAtZero: true }
-                            }]
+                            x: {
+                                grid: {
+                                    display: false,
+                                },
+                                ticks: {
+                                    color: '#666',
+                                },
+                            },
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(200, 200, 200, 0.2)',
+                                },
+                                ticks: {
+                                    stepSize: 1,
+                                    color: '#666',
+                                },
+                            },
                         }
                     }
                 });
