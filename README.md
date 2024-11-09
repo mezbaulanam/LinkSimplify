@@ -18,6 +18,8 @@ LinkSimplify is a powerful and user-friendly URL shortener designed to streamlin
 - Blacklist for custom aliases (reserved keywords)
 - URL management (edit, delete)
 - URL analytics (click tracking)
+- Social Media Sharing
+- QR Code Generation
 - Responsive design
 - Secure password storage with bcrypt
 - JWT-based authentication
@@ -25,12 +27,10 @@ LinkSimplify is a powerful and user-friendly URL shortener designed to streamlin
 - Extendable with additional features ( Planned )
 - Docker support ( Planned )
 - Custom Domain Support ( Planned )
-- QR Code Generation ( Planned )
 - Password-protected URLs ( Planned )
 - Expiration Dates ( Planned )
 - Rate Limiting ( Planned )
 - Google Analytics Integration ( Planned )
-- Social Media Sharing ( Planned )
 - API Key Authentication ( Planned )
 - Geo Location Tracking ( Planned )
 - Logging and Monitoring ( Planned )
