@@ -5,6 +5,7 @@ LinkSimplify is a powerful and user-friendly URL shortener designed to streamlin
 ## Table of Contents
 
 - [Features](#features)
+- [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
@@ -23,7 +24,6 @@ LinkSimplify is a powerful and user-friendly URL shortener designed to streamlin
 - API Access ( Planned )
 - Extendable with additional features ( Planned )
 - Docker support ( Planned )
-- Demo Deployment ( Planned )
 - Custom Domain Support ( Planned )
 - QR Code Generation ( Planned )
 - Password-protected URLs ( Planned )
@@ -36,6 +36,12 @@ LinkSimplify is a powerful and user-friendly URL shortener designed to streamlin
 - Logging and Monitoring ( Planned )
 - Spam Protection ( Planned )
 - Abuse Prevention ( Planned )
+
+## Demo
+
+[LinkSimplify Demo](https://linksimplify-57f95a96384c.herokuapp.com/)  
+Users can register with any credentials.
+
 ## Installation
 
 To get started with LinkSimplify, follow these steps:
