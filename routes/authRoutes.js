@@ -3,62 +3,80 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const { body, validationResult } = require('express-validator');
+const sanitize = require('sanitize')();
 
-router.post('/register', async (req, res) => {
-  try {
-      const { username, password } = req.body;
+router.post('/register', 
+  body('username').trim().escape(),
+  body('password').trim().escape(),
+  async (req, res) => {
+    try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 
-      // Check if user already exists
-      let user = await User.findOne({ username });
-      if (user) {
-          return res.status(400).json({ error: 'Username already taken' });
-      }
+        const { username, password } = req.body;
 
-      // Create new user
-      user = new User({ username, password });
+        // Check if user already exists
+        let user = await User.findOne({ username });
+        if (user) {
+            return res.status(400).json({ error: 'Username already taken' });
+        }
 
-      // Hash password
-      user.password = await bcrypt.hash(password, 10);
+        // Create new user
+        user = new User({ username, password });
 
-      await user.save();
+        // Hash password
+        user.password = await bcrypt.hash(password, 10);
 
-      // Create and return JWT token
-      const payload = {
-          id: user.id
-      };
+        await user.save();
 
-      jwt.sign(
-          payload,
-          process.env.JWT_SECRET,
-          { expiresIn: '1h' },
-          (err, token) => {
-              if (err) throw err;
-              res.json({ token });
-          }
-      );
-  } catch (error) {
-      console.error(error.message);
-      res.status(500).send('Server error');
-  }
+        // Create and return JWT token
+        const payload = {
+            id: user.id
+        };
+
+        jwt.sign(
+            payload,
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' },
+            (err, token) => {
+                if (err) throw err;
+                res.json({ token });
+            }
+        );
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server error');
+    }
 });
 
 // Login
-router.post('/login', async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
-    if (!user) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+router.post('/login', 
+  body('username').trim().escape(),
+  body('password').trim().escape(),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+      }
+
+      const { username, password } = req.body;
+      const user = await User.findOne({ username });
+      if (!user) {
+        return res.status(400).json({ error: 'Invalid credentials' });
+      }
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ error: 'Invalid credentials' });
+      }
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      res.json({ token });
+    } catch (error) {
+      res.status(500).json({ error: 'Server error' });
     }
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ error: 'Invalid credentials' });
-    }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
-  } catch (error) {
-    res.status(500).json({ error: 'Server error' });
-  }
 });
 router.get('/username', async (req, res) => {
   try {
