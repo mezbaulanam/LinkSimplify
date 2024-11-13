@@ -330,7 +330,7 @@ footer {
     background: transparent;
     border: none;
     color: var(--boarder);
-    cursor: cell;
+    cursor: pointer;
     font-size: 16px;
     transition: var(--transition);
 }

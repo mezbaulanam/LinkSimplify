@@ -29,7 +29,7 @@ To get started with contributing, follow these steps:
     ```sh
     npm install
     ```
-5. Create a new branch for your feature or bugfix.
+5. Create a new branch for your feature or bug fix.
     ```sh
     git checkout -b your-branch-name
     ```
