@@ -26,18 +26,18 @@ LinkSimplify is a powerful and user-friendly URL shortener designed to streamlin
 - Secure password storage with bcrypt
 - JWT-based authentication
 - Docker support
-- API Access ( Planned )
-- Extendable with additional features ( Planned )
-- Custom Domain Support ( Planned )
-- Password-protected URLs ( Planned )
-- Expiration Dates ( Planned )
-- Rate Limiting ( Planned )
-- Google Analytics Integration ( Planned )
-- API Key Authentication ( Planned )
-- Geo Location Tracking ( Planned )
-- Logging and Monitoring ( Planned )
-- Spam Protection ( Planned )
-- Abuse Prevention ( Planned )
+- API Access (planned)
+- Extendable with additional features (planned)
+- Custom Domain Support (planned)
+- Password-protected URLs (planned)
+- Expiration Dates (planned)
+- Rate Limiting (planned)
+- Google Analytics Integration (planned)
+- API Key Authentication (planned)
+- Geo Location Tracking (planned)
+- Logging and Monitoring (planned)
+- Spam Protection (planned)
+- Abuse Prevention (planned)
 
 ## Demo
 

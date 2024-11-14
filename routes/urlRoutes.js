@@ -4,6 +4,7 @@ const auth = require('../middleware/auth');
 const Url = require('../models/Url');
 const fs = require('fs');
 const path = require('path');
+const { body, validationResult } = require('express-validator');
 
 // BL
 const blacklistPath = path.join(__dirname, '..', 'middleware', 'blacklist.json');
@@ -18,10 +19,17 @@ function generateRandomId(length = 6) {
   }
   return result;
 }
-router.post('/shorten', auth, async (req, res) => {
+router.post('/shorten', auth, 
+  body('originalUrl').isURL().withMessage('Invalid URL format'),
+  async (req, res) => {
   try {
     let { originalUrl, customShortUrl } = req.body;
     
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     if (!originalUrl) {
       return res.status(400).json({ error: 'Original URL is required' });
     }

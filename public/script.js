@@ -4,7 +4,7 @@ new Vue({
         API_URL: window.location.href, // Change this to your API URL
         BASE_URL: window.location.origin + '/', // Define the base URL for frontend
         token: localStorage.getItem('token'),
-        username: localStorage.getItem('username') || 'NaN',
+        username: localStorage.getItem('username') || 'N/A',
         password: '',
         newUsername: '',
         newPassword: '',
