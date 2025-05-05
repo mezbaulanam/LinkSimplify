@@ -7,6 +7,7 @@ LinkSimplify is a powerful and user-friendly URL shortener designed to streamlin
 - [Features](#features)
 - [Demo](#demo)
 - [Installation](#installation)
+- [Configuration](#configuration)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
@@ -25,6 +26,8 @@ LinkSimplify is a powerful and user-friendly URL shortener designed to streamlin
 - Responsive design
 - Secure password storage with bcrypt
 - JWT-based authentication
+- Multiple database support (MongoDB or SQLite)
+- Simple environment-based configuration
 - Docker support
 - API Access (planned)
 - Extendable with additional features (planned)
@@ -66,18 +69,72 @@ To get started with LinkSimplify, follow these steps:
     npm install
     ```
 
-4. Create a `.env` file in the root directory and add your environment variables:
-
-    ```env
-    MONGODB_URI=your_mongodb_uri
-    JWT_SECRET=your_jwt_secret
-    ```
+4. Configure the application (see [Configuration](#configuration) section)
 
 5. Start the development server:
 
     ```sh
     npm start
     ```
+
+## Configuration
+
+LinkSimplify is configured using environment variables. You have two options for setting these:
+
+1. Create a `.env` file in the project root directory (copy from `.env.example`)
+2. Set environment variables directly in your system or deployment platform
+
+### Required Environment Variables
+
+- `DB_TYPE` - **Required**: Set to either `mongodb` or `sqlite` 
+
+### Database Options
+
+LinkSimplify supports two database types:
+
+1. **SQLite** - A self-hosted file-based database that requires no additional setup
+2. **MongoDB** - A NoSQL database that can be hosted locally or remotely
+
+#### SQLite Configuration
+
+SQLite stores data in a file on your server:
+
+```
+DB_TYPE=sqlite
+SQLITE_PATH=./data/linksimplify.db
+```
+
+If `SQLITE_PATH` is not specified, it will use the default path `./data/linksimplify.db`.
+
+#### MongoDB Configuration
+
+To use MongoDB:
+
+```
+DB_TYPE=mongodb
+MONGODB_URI=mongodb://localhost:27017/linksimplify
+```
+
+If `MONGODB_URI` is not specified when using MongoDB, it will default to `mongodb://localhost:27017/linksimplify`.
+
+### Optional Environment Variables
+
+```
+PORT=3000                  # Port for the server
+JWT_SECRET=your_secret     # Secret key for JWT token generation
+JWT_EXPIRES_IN=1h          # JWT token expiration time
+URL_LENGTH=6               # Default length of generated short URLs
+```
+
+### Sample .env file
+
+A sample `.env.example` file is provided in the repository. Copy it to create your own `.env` file:
+
+```sh
+cp .env.example .env
+```
+
+Then edit the `.env` file with your preferred settings.
 
 ## Docker Support
 
@@ -111,7 +168,6 @@ Alternatively, you can use Docker Compose to manage the setup:
 2. Register a new account or log in with an existing account.
 3. Use the URL shortener form to create a new shortened URL.
 4. Manage your URLs from the dashboard.
-
 
 ## Contributing
 
