@@ -84,9 +84,6 @@ LinkSimplify is configured using environment variables. You have two options for
 1. Create a `.env` file in the project root directory (copy from `.env.example`)
 2. Set environment variables directly in your system or deployment platform
 
-### Required Environment Variables
-
-- `DB_TYPE` - **Required**: Set to either `mongodb` or `sqlite` 
 
 ### Database Options
 
@@ -94,37 +91,6 @@ LinkSimplify supports two database types:
 
 1. **SQLite** - A self-hosted file-based database that requires no additional setup
 2. **MongoDB** - A NoSQL database that can be hosted locally or remotely
-
-#### SQLite Configuration
-
-SQLite stores data in a file on your server:
-
-```
-DB_TYPE=sqlite
-SQLITE_PATH=./data/linksimplify.db
-```
-
-If `SQLITE_PATH` is not specified, it will use the default path `./data/linksimplify.db`.
-
-#### MongoDB Configuration
-
-To use MongoDB:
-
-```
-DB_TYPE=mongodb
-MONGODB_URI=mongodb://localhost:27017/linksimplify
-```
-
-If `MONGODB_URI` is not specified when using MongoDB, it will default to `mongodb://localhost:27017/linksimplify`.
-
-### Optional Environment Variables
-
-```
-PORT=3000                  # Port for the server
-JWT_SECRET=your_secret     # Secret key for JWT token generation
-JWT_EXPIRES_IN=1h          # JWT token expiration time
-URL_LENGTH=6               # Default length of generated short URLs
-```
 
 ### Sample .env file
 
