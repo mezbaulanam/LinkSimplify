@@ -26,12 +26,15 @@
   "homepage": "https://github.com/mezbaulanam/LinkSimplify#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "better-sqlite3": "^8.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "express-validator": "latest",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.0",
     "sanitize": "latest",
-    "express-validator": "latest"
+    "sequelize": "^6.32.1",
+    "sqlite3": "^5.1.6"
   }
 }
